@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.ButtonTargetBrowse = new System.Windows.Forms.Button();
             this.TextOutput = new System.Windows.Forms.TextBox();
             this.ButtonRun = new System.Windows.Forms.Button();
@@ -92,16 +91,16 @@
             this.TextOutput.ReadOnly = true;
             this.TextOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.TextOutput.Size = new System.Drawing.Size(794, 189);
-            this.TextOutput.TabIndex = 13;
+            this.TextOutput.TabIndex = 21;
             this.TextOutput.WordWrap = false;
             // 
             // ButtonRun
             // 
-            this.ButtonRun.Location = new System.Drawing.Point(244, 143);
+            this.ButtonRun.Location = new System.Drawing.Point(242, 143);
             this.ButtonRun.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.ButtonRun.Name = "ButtonRun";
             this.ButtonRun.Size = new System.Drawing.Size(112, 35);
-            this.ButtonRun.TabIndex = 11;
+            this.ButtonRun.TabIndex = 19;
             this.ButtonRun.Text = "Make CAB";
             this.ButtonRun.UseVisualStyleBackColor = true;
             this.ButtonRun.Click += new System.EventHandler(this.ButtonRun_Click);
@@ -129,21 +128,21 @@
             // LabelCompressionType
             // 
             this.LabelCompressionType.AutoSize = true;
-            this.LabelCompressionType.Location = new System.Drawing.Point(6, 108);
+            this.LabelCompressionType.Location = new System.Drawing.Point(8, 106);
             this.LabelCompressionType.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelCompressionType.Name = "LabelCompressionType";
             this.LabelCompressionType.Size = new System.Drawing.Size(144, 20);
-            this.LabelCompressionType.TabIndex = 17;
+            this.LabelCompressionType.TabIndex = 13;
             this.LabelCompressionType.Text = "Compression Type:";
             // 
             // LabelCompressionMemory
             // 
             this.LabelCompressionMemory.AutoSize = true;
-            this.LabelCompressionMemory.Location = new System.Drawing.Point(334, 108);
+            this.LabelCompressionMemory.Location = new System.Drawing.Point(334, 106);
             this.LabelCompressionMemory.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelCompressionMemory.Name = "LabelCompressionMemory";
             this.LabelCompressionMemory.Size = new System.Drawing.Size(166, 20);
-            this.LabelCompressionMemory.TabIndex = 18;
+            this.LabelCompressionMemory.TabIndex = 15;
             this.LabelCompressionMemory.Text = "Compression Memory:";
             // 
             // DropdownCompressType
@@ -153,7 +152,7 @@
             this.DropdownCompressType.Location = new System.Drawing.Point(159, 103);
             this.DropdownCompressType.Name = "DropdownCompressType";
             this.DropdownCompressType.Size = new System.Drawing.Size(164, 28);
-            this.DropdownCompressType.TabIndex = 19;
+            this.DropdownCompressType.TabIndex = 14;
             this.DropdownCompressType.SelectedIndexChanged += new System.EventHandler(this.DropdownCompressType_SelectedIndexChanged);
             // 
             // DropdownCompressMemory
@@ -164,7 +163,7 @@
             this.DropdownCompressMemory.Location = new System.Drawing.Point(507, 103);
             this.DropdownCompressMemory.Name = "DropdownCompressMemory";
             this.DropdownCompressMemory.Size = new System.Drawing.Size(112, 28);
-            this.DropdownCompressMemory.TabIndex = 20;
+            this.DropdownCompressMemory.TabIndex = 16;
             // 
             // GroupBoxFiles
             // 
@@ -215,7 +214,7 @@
             // 
             // AddFile
             // 
-            this.AddFile.Location = new System.Drawing.Point(364, 25);
+            this.AddFile.Location = new System.Drawing.Point(360, 25);
             this.AddFile.Name = "AddFile";
             this.AddFile.Size = new System.Drawing.Size(112, 35);
             this.AddFile.TabIndex = 4;
@@ -225,7 +224,7 @@
             // 
             // AddFolder
             // 
-            this.AddFolder.Location = new System.Drawing.Point(244, 25);
+            this.AddFolder.Location = new System.Drawing.Point(242, 25);
             this.AddFolder.Name = "AddFolder";
             this.AddFolder.Size = new System.Drawing.Size(112, 35);
             this.AddFolder.TabIndex = 3;
@@ -266,7 +265,7 @@
             this.ButtonBrowseRoot.Location = new System.Drawing.Point(688, 63);
             this.ButtonBrowseRoot.Name = "ButtonBrowseRoot";
             this.ButtonBrowseRoot.Size = new System.Drawing.Size(112, 35);
-            this.ButtonBrowseRoot.TabIndex = 26;
+            this.ButtonBrowseRoot.TabIndex = 12;
             this.ButtonBrowseRoot.Text = "Browse...";
             this.ButtonBrowseRoot.UseVisualStyleBackColor = true;
             this.ButtonBrowseRoot.Click += new System.EventHandler(this.ButtonBrowseRoot_Click);
@@ -278,7 +277,7 @@
             this.TextRootDirectory.Location = new System.Drawing.Point(132, 66);
             this.TextRootDirectory.Name = "TextRootDirectory";
             this.TextRootDirectory.Size = new System.Drawing.Size(548, 26);
-            this.TextRootDirectory.TabIndex = 25;
+            this.TextRootDirectory.TabIndex = 11;
             // 
             // LabelRootDirectory
             // 
@@ -286,17 +285,17 @@
             this.LabelRootDirectory.Location = new System.Drawing.Point(8, 71);
             this.LabelRootDirectory.Name = "LabelRootDirectory";
             this.LabelRootDirectory.Size = new System.Drawing.Size(118, 20);
-            this.LabelRootDirectory.TabIndex = 24;
+            this.LabelRootDirectory.TabIndex = 10;
             this.LabelRootDirectory.Text = "CAB Root DIR:";
             // 
             // CheckSaveSettings
             // 
             this.CheckSaveSettings.AutoSize = true;
-            this.CheckSaveSettings.Location = new System.Drawing.Point(362, 149);
+            this.CheckSaveSettings.Location = new System.Drawing.Point(360, 149);
             this.CheckSaveSettings.Margin = new System.Windows.Forms.Padding(2);
             this.CheckSaveSettings.Name = "CheckSaveSettings";
             this.CheckSaveSettings.Size = new System.Drawing.Size(123, 24);
-            this.CheckSaveSettings.TabIndex = 23;
+            this.CheckSaveSettings.TabIndex = 20;
             this.CheckSaveSettings.Text = "Save on Exit";
             this.CheckSaveSettings.UseVisualStyleBackColor = true;
             // 
@@ -305,7 +304,7 @@
             this.ButtonClear.Location = new System.Drawing.Point(6, 143);
             this.ButtonClear.Name = "ButtonClear";
             this.ButtonClear.Size = new System.Drawing.Size(112, 35);
-            this.ButtonClear.TabIndex = 22;
+            this.ButtonClear.TabIndex = 17;
             this.ButtonClear.Text = "Clear Log";
             this.ButtonClear.UseVisualStyleBackColor = true;
             this.ButtonClear.Click += new System.EventHandler(this.ButtonClear_Click);
@@ -315,7 +314,7 @@
             this.ButtonExport.Location = new System.Drawing.Point(124, 143);
             this.ButtonExport.Name = "ButtonExport";
             this.ButtonExport.Size = new System.Drawing.Size(112, 35);
-            this.ButtonExport.TabIndex = 21;
+            this.ButtonExport.TabIndex = 18;
             this.ButtonExport.Text = "Export Log";
             this.ButtonExport.UseVisualStyleBackColor = true;
             this.ButtonExport.Click += new System.EventHandler(this.ButtonExport_Click);
@@ -331,7 +330,7 @@
             this.StatusStrip.Name = "StatusStrip";
             this.StatusStrip.Padding = new System.Windows.Forms.Padding(2, 0, 14, 0);
             this.StatusStrip.Size = new System.Drawing.Size(834, 32);
-            this.StatusStrip.TabIndex = 23;
+            this.StatusStrip.TabIndex = 22;
             this.StatusStrip.Text = "statusStrip1";
             // 
             // MainMenu
@@ -344,7 +343,6 @@
             this.MenuSave,
             this.Separator1,
             this.Exit});
-            this.MainMenu.Image = ((System.Drawing.Image)(resources.GetObject("MainMenu.Image")));
             this.MainMenu.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.MainMenu.Name = "MainMenu";
             this.MainMenu.Size = new System.Drawing.Size(78, 29);
@@ -355,34 +353,36 @@
             this.MenuAbout.Name = "MenuAbout";
             this.MenuAbout.Size = new System.Drawing.Size(270, 34);
             this.MenuAbout.Text = "About";
+            this.MenuAbout.Click += new System.EventHandler(this.MenuAbout_Click);
             // 
             // MenuHelp
             // 
             this.MenuHelp.Name = "MenuHelp";
             this.MenuHelp.Size = new System.Drawing.Size(270, 34);
             this.MenuHelp.Text = "Help";
+            this.MenuHelp.Click += new System.EventHandler(this.MenuHelp_Click);
             // 
             // Separator2
             // 
             this.Separator2.Name = "Separator2";
-            this.Separator2.Size = new System.Drawing.Size(267, 6);
+            this.Separator2.Size = new System.Drawing.Size(217, 6);
             // 
             // MenuSave
             // 
             this.MenuSave.Name = "MenuSave";
-            this.MenuSave.Size = new System.Drawing.Size(270, 34);
+            this.MenuSave.Size = new System.Drawing.Size(220, 34);
             this.MenuSave.Text = "Save Settings";
             this.MenuSave.Click += new System.EventHandler(this.MenuSave_Click);
             // 
             // Separator1
             // 
             this.Separator1.Name = "Separator1";
-            this.Separator1.Size = new System.Drawing.Size(267, 6);
+            this.Separator1.Size = new System.Drawing.Size(217, 6);
             // 
             // Exit
             // 
             this.Exit.Name = "Exit";
-            this.Exit.Size = new System.Drawing.Size(270, 34);
+            this.Exit.Size = new System.Drawing.Size(220, 34);
             this.Exit.Text = "Exit";
             this.Exit.Click += new System.EventHandler(this.Exit_Click);
             // 
