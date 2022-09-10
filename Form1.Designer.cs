@@ -1,4 +1,6 @@
-﻿namespace CabMaker
+﻿using System.Windows.Forms;
+
+namespace CabMaker
 {
     partial class Form1
     {
@@ -89,7 +91,7 @@
             this.TextOutput.Multiline = true;
             this.TextOutput.Name = "TextOutput";
             this.TextOutput.ReadOnly = true;
-            this.TextOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.TextOutput.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.TextOutput.Size = new System.Drawing.Size(794, 189);
             this.TextOutput.TabIndex = 21;
             this.TextOutput.WordWrap = false;
@@ -298,6 +300,7 @@
             this.CheckSaveSettings.TabIndex = 20;
             this.CheckSaveSettings.Text = "Save on Exit";
             this.CheckSaveSettings.UseVisualStyleBackColor = true;
+            this.CheckSaveSettings.CheckedChanged += new System.EventHandler(this.CheckSaveSettings_CheckedChanged);
             // 
             // ButtonClear
             // 
@@ -335,6 +338,7 @@
             // 
             // MainMenu
             // 
+            this.MainMenu.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.MainMenu.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.MainMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MenuAbout,
@@ -351,14 +355,14 @@
             // MenuAbout
             // 
             this.MenuAbout.Name = "MenuAbout";
-            this.MenuAbout.Size = new System.Drawing.Size(270, 34);
+            this.MenuAbout.Size = new System.Drawing.Size(220, 34);
             this.MenuAbout.Text = "About";
             this.MenuAbout.Click += new System.EventHandler(this.MenuAbout_Click);
             // 
             // MenuHelp
             // 
             this.MenuHelp.Name = "MenuHelp";
-            this.MenuHelp.Size = new System.Drawing.Size(270, 34);
+            this.MenuHelp.Size = new System.Drawing.Size(220, 34);
             this.MenuHelp.Text = "Help";
             this.MenuHelp.Click += new System.EventHandler(this.MenuHelp_Click);
             // 
