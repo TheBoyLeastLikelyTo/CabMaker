@@ -124,6 +124,7 @@ namespace CabMaker
 
         private void ButtonClear_Click(object sender, EventArgs e)
         {
+            ErrorProvider.Clear();
             TextOutput.Clear();
             txtTargetDir = "";
             TextOutputFile.Text = "";
@@ -162,6 +163,7 @@ namespace CabMaker
             // Disable form UI elements
             DisableForm(true);
 
+            ErrorProvider.Clear();
             jobFiles = FilesListBox.CheckedItems.Count; // Sets count of checked file list to jobFiles
             LabelOutputStatus.Text = "[JOB] Compressing " + jobFiles + " File(s) to CAB..."; // Sends jobFiles to statusBar
             TextOutput.ForeColor = SystemColors.WindowText;
@@ -169,12 +171,14 @@ namespace CabMaker
             if (String.IsNullOrWhiteSpace(TextOutputFile.Text))
             {
                 // If TextOutputFile is empty
-                LabelOutputStatus.Text = "[ERR] Please Specify a Target File!";
+                LabelOutputStatus.Text = "[ERR] Please Specify a Target File";
+                ErrorProvider.SetError(ButtonTargetBrowse, "Please Specify a Target File");
             }
             else if (String.IsNullOrWhiteSpace(DropdownCompressType.Text))
             {
                 // If DropdownCompressType is empty
-                LabelOutputStatus.Text = "[ERR] Please Specify a Compression Type!";
+                LabelOutputStatus.Text = "[ERR] Please Specify a Compression Type";
+                ErrorProvider.SetError(DropdownCompressType, "Please Specify a Compression Type");
             }
             else
             // If TextOutputFile and DropdownCompressType are selected
@@ -274,21 +278,27 @@ namespace CabMaker
                         {
                             File.SetLastWriteTime((TextOutputFile.Text), DateTime.Now);
                             LabelOutputStatus.Text = "[JOB] " + successFiles + " of " + jobFiles + " File(s) Successfully Sent to CAB!";
+                            if (CheckDeleteSidecars.Checked == true)
+                            {
+                                File.Delete(@".\setup.inf");
+                                File.Delete(@".\setup.rpt");
+                                File.Delete(TextOutputFile.Text + ".ddf");
+                            }
                         }
                         else
                         {
-                            LabelOutputStatus.Text = "[ERR] Error Creating CAB File. Check the Log for Details!";
+                            LabelOutputStatus.Text = "[ERR] Error Creating CAB File. Check the Log.";
                         }
                     }
                     else
                     {
-                        LabelOutputStatus.Text = "[ERR] CAB Root DIR is Out of Range!";
+                        LabelOutputStatus.Text = "[ERR] CAB Root DIR is Out of Range";
+                        ErrorProvider.SetError(ButtonBrowseRoot, "Root DIR must be a parent of all files");
                     }
-                    
                 }
                 catch (Exception ex)
                 {
-                    LabelOutputStatus.Text = "[ERR] Error Creating CAB File. Check the Log for Details!";
+                    LabelOutputStatus.Text = "[ERR] Error Creating CAB File. Check the Log.";
                     TextOutput.AppendText("Exit code: " + ex.ToString());
                     TextOutput.ForeColor = Color.Red;
                 }
@@ -316,7 +326,7 @@ namespace CabMaker
             });
         }
 
-        // capture output from console stderr to output box on form
+        // capture output from console stdout to output box on form
         private void Process_ErrorDataReceived(object sender, DataReceivedEventArgs e)
         {
             this.BeginInvoke((MethodInvoker)delegate
@@ -340,7 +350,8 @@ namespace CabMaker
                 RootDirectory = (save ? TextRootDirectory.Text : ""),
                 CompressionType = (save ? DropdownCompressType.SelectedItem : Constants.DefaultCompressionType),
                 CompressionWindowSize = (save ? DropdownCompressMemory.SelectedValue : Constants.DefaultCompressionWindowSize.Exponent),
-                SaveUserSettings = (save ? CheckSaveSettings.Checked : true)
+                SaveUserSettings = (save ? CheckSaveSettings.Checked : true),
+                DeleteSidecars = (save ? CheckDeleteSidecars.Checked : true)
             };
             storage.SaveObject(settings, $"{Application.ProductName}.dat");
         }
@@ -355,6 +366,7 @@ namespace CabMaker
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.Text = "CabMaker " + Assembly.GetExecutingAssembly().GetName().Version.ToString(2);
             DropdownCompressType.Items.AddRange(Enum.GetNames(typeof(CompressionType)));
             DropdownCompressType.SelectedIndex = 0;
             DropdownCompressMemory.DataSource = Constants.CompressionWindowSizes;
@@ -373,13 +385,13 @@ namespace CabMaker
                 DropdownCompressType.SelectedItem = settings.CompressionType ?? Constants.DefaultCompressionType;
                 DropdownCompressMemory.SelectedValue = settings.CompressionWindowSize ?? Constants.DefaultCompressionWindowSize.Exponent;
                 CheckSaveSettings.Checked = settings.SaveUserSettings;
+                CheckDeleteSidecars.Checked = settings.DeleteSidecars;
             }
             else
             {
                 DropdownCompressType.SelectedItem = Constants.DefaultCompressionType;
                 DropdownCompressMemory.SelectedValue = Constants.DefaultCompressionWindowSize.Exponent;
             }
-            LabelVersion.Text = "Version " + Assembly.GetExecutingAssembly().GetName().Version.ToString(2);
             LabelOutputStatus.Text = "[JOB] " + jobFiles + " Files Imported!";
         }
 
@@ -403,12 +415,12 @@ namespace CabMaker
 
         private void MenuAbout_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("About CabMaker 1.3" + Environment.NewLine + Environment.NewLine + "Based on CabMaker 1.5.2 by GitHub/sapientcoder" + Environment.NewLine + "GUI reworked by GitHub/TheBoyLeastLikelyTo", "About", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            MessageBox.Show("Based on CabMaker 1.5.2 by GitHub/sapientcoder" + Environment.NewLine + "GUI reworked by GitHub/TheBoyLeastLikelyTo", "About CabMaker " + Assembly.GetExecutingAssembly().GetName().Version.ToString(2), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
 
         private void MenuHelp_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Help with CabMaker 1.3" + Environment.NewLine + Environment.NewLine + "Use the 'Add Folder' and 'Add File' buttons in the 'Files' area to add files for your Cabinet into the list box below. When you have added all your input files, go down to the 'Compressor' group, and browse for the location of the 'Output File', where your CAB will be saved. Additionally, If your CAB will contain subfolders, browse for the path of the first folder with 'CAB Root Dir'. When you are ready, select the type of compression the CAB will have (None, MSZIP, or LZX), and click 'Make CAB'. If you wish to save the settings used with the Compressor group, you can check the 'Save on Exit' box, or save the settings manually in the Menu.", "Help", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            MessageBox.Show("Use the 'Add Folder' and 'Add File' buttons in the 'Files' area to add files for your Cabinet into the list box below. When you have added all your input files, go down to the 'Compressor' group, and browse for the location of the 'Output File', where your CAB will be saved. Additionally, If your CAB will contain subfolders, browse for the path of the first folder with 'CAB Root Dir'. When you are ready, select the type of compression the CAB will have (None, MSZIP, or LZX), and click 'Make CAB'. If you wish to save the settings used with the Compressor group, you can check the 'Save on Exit' box, or save the settings manually in the Menu.", "Help with CabMaker " + Assembly.GetExecutingAssembly().GetName().Version.ToString(2), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
 
         private void CheckSaveSettings_CheckedChanged(object sender, EventArgs e)
