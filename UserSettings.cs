@@ -11,5 +11,6 @@ namespace CabMaker
         public object CompressionType { get; set; }
         public object CompressionWindowSize { get; set; }
         public bool SaveUserSettings { get; set; }
+        public bool DeleteSidecars { get; set; }
     }
 }
