@@ -111,7 +111,16 @@ namespace CabMaker
             List<string> ComboContents = ComboRootDir.Items.Cast<string>().ToList();
             List<string> UniqueContents = ComboContents.Distinct().ToList();
             ComboRootDir.Items.Clear();
-            ComboRootDir.Items.AddRange(UniqueContents.ToArray());
+            foreach (string item in UniqueContents)
+            {
+                DirectoryInfo parent = Directory.GetParent(item);
+                while (parent != null)
+                {
+                    ComboRootDir.Items.Add(parent.FullName);
+                    parent = parent.Parent;
+                }
+            }
+            //ComboRootDir.Items.AddRange(UniqueContents.ToArray());
         }
 
         private void ButtonTargetBrowse_Click(object sender, EventArgs e)
