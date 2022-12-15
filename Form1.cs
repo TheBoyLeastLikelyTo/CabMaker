@@ -108,10 +108,9 @@ namespace CabMaker
 
         private void CleanComboContents()
         {
-            List<string> ComboContents = ComboRootDir.Items.Cast<string>().ToList();
-            List<string> UniqueContents = ComboContents.Distinct().ToList();
+            ComboRootDir.Text = "";
             ComboRootDir.Items.Clear();
-            foreach (string item in UniqueContents)
+            foreach (string item in FilesListBox.CheckedItems)
             {
                 DirectoryInfo parent = Directory.GetParent(item);
                 while (parent != null)
@@ -120,7 +119,12 @@ namespace CabMaker
                     parent = parent.Parent;
                 }
             }
-            //ComboRootDir.Items.AddRange(UniqueContents.ToArray());
+            List<string> UniqueContents = ComboRootDir.Items.Cast<string>().Distinct().ToList();
+            ComboRootDir.Items.Clear();
+            foreach (string item in UniqueContents)
+            {
+                ComboRootDir.Items.Add(item);
+            }
         }
 
         private void ButtonTargetBrowse_Click(object sender, EventArgs e)
@@ -189,7 +193,7 @@ namespace CabMaker
                 // If DropdownCompressType is empty
                 LabelOutputStatus.Text = "[ERROR] Please Specify the Compression Type";
             }
-            else if (!FilesListBox.CheckedItems.Cast<string>().ToList().Contains(ComboRootDir.Text))
+            else if (FilesListBox.CheckedItems.Cast<string>().ToList().Contains(ComboRootDir.Text))
             {
                 // If ComboRootDir does not contain a checked item from FileListBox
                 LabelOutputStatus.Text = "[ERROR] Root DIR is Out of Range";
@@ -361,7 +365,7 @@ namespace CabMaker
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.Text = "CabMaker " + Assembly.GetExecutingAssembly().GetName().Version.ToString(2);
+            this.Text = "CabMaker " + Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
             DropdownCompressType.Items.AddRange(Enum.GetNames(typeof(CompressionType)));
             DropdownCompressType.SelectedIndex = 0;
             DropdownCompressMemory.DataSource = Constants.CompressionWindowSizes;
@@ -409,12 +413,12 @@ namespace CabMaker
 
         private void MenuAbout_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Based on CabMaker 1.5.2 by GitHub/sapientcoder" + Environment.NewLine + "GUI reworked by GitHub/TheBoyLeastLikelyTo", "About CabMaker " + Assembly.GetExecutingAssembly().GetName().Version.ToString(2), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            MessageBox.Show("Based on CabMaker 1.5.2 by GitHub/sapientcoder" + Environment.NewLine + "GUI reworked by GitHub/TheBoyLeastLikelyTo", "About CabMaker " + Assembly.GetExecutingAssembly().GetName().Version.ToString(3), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
 
         private void MenuHelp_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Use the 'Add Folder' and 'Add File' buttons in the 'Files' area to add files for your Cabinet into the list box below. When you have added all your input files, go down to the 'Compressor' group, and browse for the location of the 'Output File', where your CAB will be saved. Additionally, If your CAB will contain subfolders, browse for the path of the first folder with 'CAB Root Dir'. When you are ready, select the type of compression the CAB will have (None, MSZIP, or LZX), and click 'Make CAB'. If you wish to save the settings used with the Compressor group, you can check the 'Save on Exit' box, or save the settings manually in the Menu.", "CabMaker " + Assembly.GetExecutingAssembly().GetName().Version.ToString(2) + " Help", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            MessageBox.Show("Use the 'Add Folder' and 'Add File' buttons in the 'Files' area to add files for your Cabinet into the list box below. When you have added all your input files, go down to the 'Compressor' group, and browse for the location of the 'Output File', where your CAB will be saved. Additionally, If your CAB will contain subfolders, browse for the path of the first folder with 'CAB Root Dir'. When you are ready, select the type of compression the CAB will have (None, MSZIP, or LZX), and click 'Make CAB'. If you wish to save the settings used with the Compressor group, you can check the 'Save on Exit' box, or save the settings manually in the Menu.", "CabMaker " + Assembly.GetExecutingAssembly().GetName().Version.ToString(3) + " Help", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
 
         private void CheckSaveSettings_CheckedChanged(object sender, EventArgs e)
