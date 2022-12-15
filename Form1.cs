@@ -5,9 +5,11 @@ using System.Drawing;
 using System.IO;
 using System.IO.IsolatedStorage;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
+using static System.Net.WebRequestMethods;
 
 namespace CabMaker
 {
@@ -24,7 +26,6 @@ namespace CabMaker
         int jobFiles = 0;
         int successFiles = 0;
         string txtTargetDir = "";
-        bool proceed = true;
 
         private bool IncludeCompressionWindowSize =>
             !Constants.DefaultCompressionType.ToString().Equals(DropdownCompressType.Items[DropdownCompressType.SelectedIndex]) &&
@@ -34,7 +35,7 @@ namespace CabMaker
         {
             FilesListBox.Items.Clear();
             jobFiles = 0;
-            LabelOutputStatus.Text = "[JOB] " + jobFiles + " Files Imported!";
+            LabelOutputStatus.Text = "[JOB] " + jobFiles + " Files Imported";
             GroupBoxFiles.Text = "Files";
         }
 
@@ -73,7 +74,7 @@ namespace CabMaker
                         FilesListBox.Items.Add(fileName, true);
                         jobFiles += 1;
                     }
-                    LabelOutputStatus.Text = "[JOB] " + jobFiles + " Files Imported!";
+                    LabelOutputStatus.Text = "[JOB] " + jobFiles + " Files Imported";
                     GroupBoxFiles.Text = "Files" + " [" + jobFiles + " Imported]";
                 }
                 catch { }
@@ -95,7 +96,7 @@ namespace CabMaker
                     FilesListBox.Items.Add(fileName, true);
                     jobFiles += 1;
                 }
-                LabelOutputStatus.Text = "[JOB] " + jobFiles + " Files Imported!";
+                LabelOutputStatus.Text = "[JOB] " + jobFiles + " Files Imported";
                 GroupBoxFiles.Text = "Files [" + jobFiles + " Files Imported]";
             }
         }
@@ -129,7 +130,7 @@ namespace CabMaker
             txtTargetDir = "";
             TextOutputFile.Text = "";
             TextRootDirectory.Text = "";
-            LabelOutputStatus.Text = "[JOB] " + jobFiles + " Files Imported!";
+            LabelOutputStatus.Text = "[JOB] " + jobFiles + " Files Imported";
         }
 
         private void ButtonExport_Click(object sender, EventArgs e)
@@ -140,7 +141,7 @@ namespace CabMaker
             };
             if (sfd.ShowDialog() == DialogResult.OK)
             {
-                File.WriteAllText(sfd.FileName, TextOutput.Text);
+                System.IO.File.WriteAllText(sfd.FileName, TextOutput.Text);
             }
         }
 
@@ -160,9 +161,6 @@ namespace CabMaker
 
         private void ButtonRun_Click(object sender, EventArgs e)
         {
-            // Disable form UI elements
-            DisableForm(true);
-
             ErrorProvider.Clear();
             jobFiles = FilesListBox.CheckedItems.Count; // Sets count of checked file list to jobFiles
             LabelOutputStatus.Text = "[JOB] Compressing " + jobFiles + " File(s) to CAB..."; // Sends jobFiles to statusBar
@@ -171,17 +169,22 @@ namespace CabMaker
             if (String.IsNullOrWhiteSpace(TextOutputFile.Text))
             {
                 // If TextOutputFile is empty
-                LabelOutputStatus.Text = "[ERR] Please Specify a Target File";
-                ErrorProvider.SetError(ButtonTargetBrowse, "Please Specify a Target File");
+                LabelOutputStatus.Text = "[ERROR] Please Specify the Target File";
+                ErrorProvider.SetError(ButtonTargetBrowse, "Specify where your Cabinet should be placed");
             }
             else if (String.IsNullOrWhiteSpace(DropdownCompressType.Text))
             {
                 // If DropdownCompressType is empty
-                LabelOutputStatus.Text = "[ERR] Please Specify a Compression Type";
-                ErrorProvider.SetError(DropdownCompressType, "Please Specify a Compression Type");
+                LabelOutputStatus.Text = "[ERROR] Please Specify the Compression Type";
             }
-            else
-            // If TextOutputFile and DropdownCompressType are selected
+            else if (String.IsNullOrWhiteSpace(TextRootDirectory.Text))
+            {
+                // If TextRootDirectory is empty
+                LabelOutputStatus.Text = "[ERROR] Please Specify the Root DIR";
+                ErrorProvider.SetError(ButtonBrowseRoot, "Root DIR must be a parent of all files");
+            }
+            else if (FilesListBox.CheckedItems.Count > 0)
+            // If more than 0 files are checked in the File List
             {
                 try
                 {
@@ -200,11 +203,13 @@ namespace CabMaker
 .Set Cabinet=on
 .Set Compress={compressValue}");
 
-                    if (compress) {
+                    if (compress)
+                    {
                         ddf.AppendLine($".Set CompressionType={DropdownCompressType.SelectedItem ?? Constants.DefaultCompressionType}");
                     }
 
-                    if (IncludeCompressionWindowSize) {
+                    if (IncludeCompressionWindowSize)
+                    {
                         ddf.AppendFormat($".Set CompressionMemory={(DropdownCompressMemory.SelectedItem as CompressionWindowSize ?? Constants.DefaultCompressionWindowSize).Exponent}");
                         ddf.AppendLine();
                     }
@@ -214,94 +219,73 @@ namespace CabMaker
                     int ddfHeaderLines = ddf.ToString().Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).Length;
                     int maxFiles = MAX_LINES_IN_DDF - ddfHeaderLines; // only write enough files to hit the max # of lines allowed in a DDF (blank lines don't count)
 
-                    if (String.IsNullOrWhiteSpace(TextRootDirectory.Text))
+                    // If there is something in TextRootDirectory
+                    // Perhaps folder validation/combobox should be added later
+                    List<DdfFileRow> ddfFiles = GetFiles(TextRootDirectory.Text);
+                    foreach (var ddfFile in ddfFiles.Take(maxFiles))
                     {
-                        // If there is nothing in TextRootDirectory
-                        foreach (string fileName in FilesListBox.SelectedItems)
+                        if (ddfFile.FullName.Contains(TextRootDirectory.Text))
                         {
-                            proceed = true;
-                            ddf.AppendFormat($"{fileName.EnsureQuoted()}{Environment.NewLine}");
+                            successFiles += 1;
+                            ddf.AppendFormat("\"{0}\" \"{1}\"{2}", ddfFile.FullName, ddfFile.Path, Environment.NewLine);
+                        }
+                    }
+
+                    // Disable form UI elements
+                    DisableForm(true);
+
+                    System.IO.File.WriteAllText(ddfPath, ddf.ToString(), Encoding.Default);
+                    string cmd = String.Format("/f {0}", ddfPath.EnsureQuoted());
+
+                    // Run "makecab.exe"
+                    Process process = new Process();
+                    ProcessStartInfo startInfo = new ProcessStartInfo
+                    {
+                        CreateNoWindow = true,
+                        FileName = "makecab.exe",
+                        Arguments = cmd,
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true,
+                        UseShellExecute = false
+                    };
+                    process.StartInfo = startInfo;
+
+                    process.ErrorDataReceived += Process_ErrorDataReceived;
+                    process.OutputDataReceived += Process_OutputDataReceived;
+
+                    process.Start();
+                    process.BeginOutputReadLine();
+                    process.BeginErrorReadLine();
+                    process.WaitForExit();
+
+                    if (process.ExitCode == EXIT_CODE_SUCCESS)
+                    {
+                        System.IO.File.SetLastWriteTime((TextOutputFile.Text), DateTime.Now);
+                        LabelOutputStatus.Text = "[JOB] " + successFiles + " of " + jobFiles + " File(s) Successfully Sent to CAB";
+                        if (CheckDeleteSidecars.Checked == true)
+                        {
+                            System.IO.File.Delete(@".\setup.inf");
+                            System.IO.File.Delete(@".\setup.rpt");
+                            System.IO.File.Delete(TextOutputFile.Text + ".ddf");
                         }
                     }
                     else
                     {
-                        // If there is something in TextRootDirectory
-                        // Perhaps folder validation/combobox should be added later
-                        List<DdfFileRow> ddfFiles = GetFiles(TextRootDirectory.Text);
-                        foreach (var ddfFile in ddfFiles.Take(maxFiles))
-                        {
-                            if (ddfFile.FullName.Contains(TextRootDirectory.Text))
-                            {
-                                proceed = true;
-                                successFiles += 1;
-                                ddf.AppendFormat("\"{0}\" \"{1}\"{2}", ddfFile.FullName, ddfFile.Path, Environment.NewLine);
-                            }
-                            else
-                            {
-                                // janky, perhaps attach a false bool to if statement below
-                                proceed = false;
-                                successFiles = 0;
-                            }
-                        }
-                    }
-
-                    if (proceed == true)
-                    {
-                        File.WriteAllText(ddfPath, ddf.ToString(), Encoding.Default);
-
-                        string cmd = String.Format("/f {0}", ddfPath.EnsureQuoted());
-
-                        // Run "makecab.exe"
-                        Process process = new Process();
-                        ProcessStartInfo startInfo = new ProcessStartInfo
-                        {
-                            CreateNoWindow = true,
-                            FileName = "makecab.exe",
-                            Arguments = cmd,
-                            RedirectStandardOutput = true,
-                            RedirectStandardError = true,
-                            UseShellExecute = false
-                        };
-                        process.StartInfo = startInfo;
-
-                        process.ErrorDataReceived += Process_ErrorDataReceived;
-                        process.OutputDataReceived += Process_OutputDataReceived;
-
-                        process.Start();
-                        process.BeginOutputReadLine();
-                        process.BeginErrorReadLine();
-                        process.WaitForExit();
-
-                        TextOutput.AppendText("Exit code: " + process.ExitCode);
-
-                        if (process.ExitCode == EXIT_CODE_SUCCESS)
-                        {
-                            File.SetLastWriteTime((TextOutputFile.Text), DateTime.Now);
-                            LabelOutputStatus.Text = "[JOB] " + successFiles + " of " + jobFiles + " File(s) Successfully Sent to CAB!";
-                            if (CheckDeleteSidecars.Checked == true)
-                            {
-                                File.Delete(@".\setup.inf");
-                                File.Delete(@".\setup.rpt");
-                                File.Delete(TextOutputFile.Text + ".ddf");
-                            }
-                        }
-                        else
-                        {
-                            LabelOutputStatus.Text = "[ERR] Error Creating CAB File. Check the Log.";
-                        }
-                    }
-                    else
-                    {
-                        LabelOutputStatus.Text = "[ERR] CAB Root DIR is Out of Range";
-                        ErrorProvider.SetError(ButtonBrowseRoot, "Root DIR must be a parent of all files");
+                        process.Kill();
+                        LabelOutputStatus.Text = "[ERROR] makecab catastrophic faliure. Check the Log";
                     }
                 }
                 catch (Exception ex)
                 {
-                    LabelOutputStatus.Text = "[ERR] Error Creating CAB File. Check the Log.";
-                    TextOutput.AppendText("Exit code: " + ex.ToString());
+                    LabelOutputStatus.Text = "[ERROR] Error Creating CAB File. Check the Log";
+                    TextOutput.AppendText("Exit Code: " + ex.ToString() + Environment.NewLine);
                     TextOutput.ForeColor = Color.Red;
                 }
+            }
+            else
+            {
+                LabelOutputStatus.Text = "[ERROR] No Files Selected";
+                ErrorProvider.SetError(AddFile, "Check the files you wish to be sent to the Cabinet");
             }
             // Enable form UI elements
             DisableForm(false);
@@ -392,7 +376,7 @@ namespace CabMaker
                 DropdownCompressType.SelectedItem = Constants.DefaultCompressionType;
                 DropdownCompressMemory.SelectedValue = Constants.DefaultCompressionWindowSize.Exponent;
             }
-            LabelOutputStatus.Text = "[JOB] " + jobFiles + " Files Imported!";
+            LabelOutputStatus.Text = "[JOB] " + jobFiles + " Files Imported";
         }
 
         private void DropdownCompressType_SelectedIndexChanged(object sender, EventArgs e)
@@ -410,7 +394,7 @@ namespace CabMaker
         private void MenuSave_Click(object sender, EventArgs e)
         {
             SaveSettings(true);
-            LabelOutputStatus.Text = "[CabMaker] Compressor Settings Saved!";
+            LabelOutputStatus.Text = "[CabMaker] Compressor Settings Saved";
         }
 
         private void MenuAbout_Click(object sender, EventArgs e)
@@ -420,7 +404,7 @@ namespace CabMaker
 
         private void MenuHelp_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Use the 'Add Folder' and 'Add File' buttons in the 'Files' area to add files for your Cabinet into the list box below. When you have added all your input files, go down to the 'Compressor' group, and browse for the location of the 'Output File', where your CAB will be saved. Additionally, If your CAB will contain subfolders, browse for the path of the first folder with 'CAB Root Dir'. When you are ready, select the type of compression the CAB will have (None, MSZIP, or LZX), and click 'Make CAB'. If you wish to save the settings used with the Compressor group, you can check the 'Save on Exit' box, or save the settings manually in the Menu.", "Help with CabMaker " + Assembly.GetExecutingAssembly().GetName().Version.ToString(2), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            MessageBox.Show("Use the 'Add Folder' and 'Add File' buttons in the 'Files' area to add files for your Cabinet into the list box below. When you have added all your input files, go down to the 'Compressor' group, and browse for the location of the 'Output File', where your CAB will be saved. Additionally, If your CAB will contain subfolders, browse for the path of the first folder with 'CAB Root Dir'. When you are ready, select the type of compression the CAB will have (None, MSZIP, or LZX), and click 'Make CAB'. If you wish to save the settings used with the Compressor group, you can check the 'Save on Exit' box, or save the settings manually in the Menu.", "CabMaker " + Assembly.GetExecutingAssembly().GetName().Version.ToString(2) + " Help", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
 
         private void CheckSaveSettings_CheckedChanged(object sender, EventArgs e)
