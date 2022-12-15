@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using static System.Net.WebRequestMethods;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 
 namespace CabMaker
 {
@@ -34,6 +35,7 @@ namespace CabMaker
         private void ClearFiles_Click(object sender, EventArgs e)
         {
             FilesListBox.Items.Clear();
+            ComboRootDir.Items.Clear();
             jobFiles = 0;
             LabelOutputStatus.Text = "[JOB] " + jobFiles + " Files Imported";
             GroupBoxFiles.Text = "Files";
@@ -73,13 +75,14 @@ namespace CabMaker
                     {
                         FilesListBox.Items.Add(fileName, true);
                         jobFiles += 1;
+                        ComboRootDir.Items.Add(Path.GetDirectoryName(fileName));
                     }
+                    CleanComboContents();
                     LabelOutputStatus.Text = "[JOB] " + jobFiles + " Files Imported";
                     GroupBoxFiles.Text = "Files" + " [" + jobFiles + " Imported]";
                 }
                 catch { }
             }
-            TextRootDirectory.Text = folderDialog.SelectedPath;
         }
 
         private void AddFile_Click(object sender, EventArgs e)
@@ -95,10 +98,20 @@ namespace CabMaker
                 {
                     FilesListBox.Items.Add(fileName, true);
                     jobFiles += 1;
+                    ComboRootDir.Items.Add(Path.GetDirectoryName(fileName));
                 }
+                CleanComboContents();
                 LabelOutputStatus.Text = "[JOB] " + jobFiles + " Files Imported";
                 GroupBoxFiles.Text = "Files [" + jobFiles + " Files Imported]";
             }
+        }
+
+        private void CleanComboContents()
+        {
+            List<string> ComboContents = ComboRootDir.Items.Cast<string>().ToList();
+            List<string> UniqueContents = ComboContents.Distinct().ToList();
+            ComboRootDir.Items.Clear();
+            ComboRootDir.Items.AddRange(UniqueContents.ToArray());
         }
 
         private void ButtonTargetBrowse_Click(object sender, EventArgs e)
@@ -113,23 +126,13 @@ namespace CabMaker
             }
         }
 
-        private void ButtonBrowseRoot_Click(object sender, EventArgs e)
-        {
-            FolderBrowserDialog folderDialog;
-            folderDialog = new FolderBrowserDialog();
-            if (folderDialog.ShowDialog() == DialogResult.OK)
-            {
-                TextRootDirectory.Text = folderDialog.SelectedPath;
-            }
-        }
-
         private void ButtonClear_Click(object sender, EventArgs e)
         {
             ErrorProvider.Clear();
             TextOutput.Clear();
+            ComboRootDir.Text = "";
             txtTargetDir = "";
             TextOutputFile.Text = "";
-            TextRootDirectory.Text = "";
             LabelOutputStatus.Text = "[JOB] " + jobFiles + " Files Imported";
         }
 
@@ -177,14 +180,14 @@ namespace CabMaker
                 // If DropdownCompressType is empty
                 LabelOutputStatus.Text = "[ERROR] Please Specify the Compression Type";
             }
-            else if (String.IsNullOrWhiteSpace(TextRootDirectory.Text))
+            else if (!FilesListBox.CheckedItems.Cast<string>().ToList().Contains(ComboRootDir.Text))
             {
-                // If TextRootDirectory is empty
-                LabelOutputStatus.Text = "[ERROR] Please Specify the Root DIR";
-                ErrorProvider.SetError(ButtonBrowseRoot, "Root DIR must be a parent of all files");
+                // If ComboRootDir does not contain a checked item from FileListBox
+                LabelOutputStatus.Text = "[ERROR] Root DIR is Out of Range";
+                ErrorProvider.SetError(ComboRootDir, "Root DIR must be a parent of all files");
             }
             else if (FilesListBox.CheckedItems.Count > 0)
-            // If more than 0 files are checked in the File List
+            // If more than 0 files are checked in the FileListBox
             {
                 try
                 {
@@ -219,12 +222,12 @@ namespace CabMaker
                     int ddfHeaderLines = ddf.ToString().Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).Length;
                     int maxFiles = MAX_LINES_IN_DDF - ddfHeaderLines; // only write enough files to hit the max # of lines allowed in a DDF (blank lines don't count)
 
-                    // If there is something in TextRootDirectory
+                    // If there is something in ComboRootDir
                     // Perhaps folder validation/combobox should be added later
-                    List<DdfFileRow> ddfFiles = GetFiles(TextRootDirectory.Text);
+                    List<DdfFileRow> ddfFiles = GetFiles(ComboRootDir.Text);
                     foreach (var ddfFile in ddfFiles.Take(maxFiles))
                     {
-                        if (ddfFile.FullName.Contains(TextRootDirectory.Text))
+                        if (ddfFile.FullName.Contains(ComboRootDir.Text))
                         {
                             successFiles += 1;
                             ddf.AppendFormat("\"{0}\" \"{1}\"{2}", ddfFile.FullName, ddfFile.Path, Environment.NewLine);
@@ -331,7 +334,6 @@ namespace CabMaker
             UserSettings settings = new UserSettings()
             {
                 OutputFile = (save ? TextOutputFile.Text : ""),
-                RootDirectory = (save ? TextRootDirectory.Text : ""),
                 CompressionType = (save ? DropdownCompressType.SelectedItem : Constants.DefaultCompressionType),
                 CompressionWindowSize = (save ? DropdownCompressMemory.SelectedValue : Constants.DefaultCompressionWindowSize.Exponent),
                 SaveUserSettings = (save ? CheckSaveSettings.Checked : true),
@@ -365,7 +367,6 @@ namespace CabMaker
             if (settings != null)
             {
                 TextOutputFile.Text = settings.OutputFile;
-                TextRootDirectory.Text = settings.RootDirectory;
                 DropdownCompressType.SelectedItem = settings.CompressionType ?? Constants.DefaultCompressionType;
                 DropdownCompressMemory.SelectedValue = settings.CompressionWindowSize ?? Constants.DefaultCompressionWindowSize.Exponent;
                 CheckSaveSettings.Checked = settings.SaveUserSettings;

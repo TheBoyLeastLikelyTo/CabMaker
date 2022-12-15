@@ -48,8 +48,6 @@ namespace CabMaker
             this.AddFolder = new System.Windows.Forms.Button();
             this.GroupBoxCompressor = new System.Windows.Forms.GroupBox();
             this.CheckDeleteSidecars = new System.Windows.Forms.CheckBox();
-            this.ButtonBrowseRoot = new System.Windows.Forms.Button();
-            this.TextRootDirectory = new System.Windows.Forms.TextBox();
             this.LabelRootDirectory = new System.Windows.Forms.Label();
             this.CheckSaveSettings = new System.Windows.Forms.CheckBox();
             this.ButtonClear = new System.Windows.Forms.Button();
@@ -65,6 +63,7 @@ namespace CabMaker
             this.LabelOutputStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.ErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.ComboRootDir = new System.Windows.Forms.ComboBox();
             this.GroupBoxFiles.SuspendLayout();
             this.GroupBoxCompressor.SuspendLayout();
             this.StatusStrip.SuspendLayout();
@@ -254,9 +253,8 @@ namespace CabMaker
             this.GroupBoxCompressor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.GroupBoxCompressor.Controls.Add(this.ComboRootDir);
             this.GroupBoxCompressor.Controls.Add(this.CheckDeleteSidecars);
-            this.GroupBoxCompressor.Controls.Add(this.ButtonBrowseRoot);
-            this.GroupBoxCompressor.Controls.Add(this.TextRootDirectory);
             this.GroupBoxCompressor.Controls.Add(this.LabelRootDirectory);
             this.GroupBoxCompressor.Controls.Add(this.CheckSaveSettings);
             this.GroupBoxCompressor.Controls.Add(this.ButtonClear);
@@ -288,26 +286,6 @@ namespace CabMaker
             this.ToolTip.SetToolTip(this.CheckDeleteSidecars, "Deletes temporary files after job");
             this.CheckDeleteSidecars.UseVisualStyleBackColor = true;
             // 
-            // ButtonBrowseRoot
-            // 
-            this.ButtonBrowseRoot.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.ButtonBrowseRoot.Location = new System.Drawing.Point(500, 58);
-            this.ButtonBrowseRoot.Name = "ButtonBrowseRoot";
-            this.ButtonBrowseRoot.Size = new System.Drawing.Size(112, 35);
-            this.ButtonBrowseRoot.TabIndex = 12;
-            this.ButtonBrowseRoot.Text = "Browse...";
-            this.ButtonBrowseRoot.UseVisualStyleBackColor = true;
-            this.ButtonBrowseRoot.Click += new System.EventHandler(this.ButtonBrowseRoot_Click);
-            // 
-            // TextRootDirectory
-            // 
-            this.TextRootDirectory.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextRootDirectory.Location = new System.Drawing.Point(108, 62);
-            this.TextRootDirectory.Name = "TextRootDirectory";
-            this.TextRootDirectory.Size = new System.Drawing.Size(384, 26);
-            this.TextRootDirectory.TabIndex = 11;
-            // 
             // LabelRootDirectory
             // 
             this.LabelRootDirectory.AutoSize = true;
@@ -322,7 +300,7 @@ namespace CabMaker
             // 
             this.CheckSaveSettings.AutoSize = true;
             this.CheckSaveSettings.Location = new System.Drawing.Point(360, 149);
-            this.CheckSaveSettings.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.CheckSaveSettings.Margin = new System.Windows.Forms.Padding(2);
             this.CheckSaveSettings.Name = "CheckSaveSettings";
             this.CheckSaveSettings.Size = new System.Drawing.Size(123, 24);
             this.CheckSaveSettings.TabIndex = 20;
@@ -433,6 +411,14 @@ namespace CabMaker
             this.ErrorProvider.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.AlwaysBlink;
             this.ErrorProvider.ContainerControl = this;
             // 
+            // ComboRootDir
+            // 
+            this.ComboRootDir.FormattingEnabled = true;
+            this.ComboRootDir.Location = new System.Drawing.Point(108, 62);
+            this.ComboRootDir.Name = "ComboRootDir";
+            this.ComboRootDir.Size = new System.Drawing.Size(504, 28);
+            this.ComboRootDir.TabIndex = 23;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -481,8 +467,6 @@ namespace CabMaker
         private System.Windows.Forms.Button ButtonExport;
         private System.Windows.Forms.Button ButtonClear;
         private System.Windows.Forms.CheckBox CheckSaveSettings;
-        private System.Windows.Forms.Button ButtonBrowseRoot;
-        private System.Windows.Forms.TextBox TextRootDirectory;
         private System.Windows.Forms.Label LabelRootDirectory;
         private System.Windows.Forms.ToolStripSplitButton MainMenu;
         private System.Windows.Forms.ToolStripMenuItem MenuAbout;
@@ -494,6 +478,7 @@ namespace CabMaker
         private CheckBox CheckDeleteSidecars;
         private ToolTip ToolTip;
         private ErrorProvider ErrorProvider;
+        private ComboBox ComboRootDir;
     }
 }
 
