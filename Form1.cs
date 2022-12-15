@@ -36,6 +36,7 @@ namespace CabMaker
         {
             FilesListBox.Items.Clear();
             ComboRootDir.Items.Clear();
+            ErrorProvider.Clear();
             jobFiles = 0;
             LabelOutputStatus.Text = "[JOB] " + jobFiles + " Files Imported";
             GroupBoxFiles.Text = "Files";
@@ -188,16 +189,22 @@ namespace CabMaker
                 LabelOutputStatus.Text = "[ERROR] Please Specify the Target File";
                 ErrorProvider.SetError(ButtonTargetBrowse, "Specify where your Cabinet should be placed");
             }
-            else if (String.IsNullOrWhiteSpace(DropdownCompressType.Text))
+            else if (String.IsNullOrEmpty(DropdownCompressType.Text))
             {
                 // If DropdownCompressType is empty
                 LabelOutputStatus.Text = "[ERROR] Please Specify the Compression Type";
             }
-            else if (FilesListBox.CheckedItems.Cast<string>().ToList().Contains(ComboRootDir.Text))
+            else if (String.IsNullOrEmpty(ComboRootDir.Text))
             {
                 // If ComboRootDir does not contain a checked item from FileListBox
                 LabelOutputStatus.Text = "[ERROR] Root DIR is Out of Range";
                 ErrorProvider.SetError(ComboRootDir, "Root DIR must be a parent of all files");
+            }
+            else if (FilesListBox.CheckedItems.Count > MAX_LINES_IN_DDF)
+            {
+                // If more than 1024 (DDF limit) files are selected
+                LabelOutputStatus.Text = "[ERROR] DDF Max Files Limit (" + MAX_LINES_IN_DDF + ") has been reached";
+                ErrorProvider.SetError(AddFile, "There must be less than " + MAX_LINES_IN_DDF + " files selected.");
             }
             else if (FilesListBox.CheckedItems.Count > 0)
             // If more than 0 files are checked in the FileListBox

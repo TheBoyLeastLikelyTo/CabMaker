@@ -47,6 +47,7 @@ namespace CabMaker
             this.AddFile = new System.Windows.Forms.Button();
             this.AddFolder = new System.Windows.Forms.Button();
             this.GroupBoxCompressor = new System.Windows.Forms.GroupBox();
+            this.ComboRootDir = new System.Windows.Forms.ComboBox();
             this.CheckDeleteSidecars = new System.Windows.Forms.CheckBox();
             this.LabelRootDirectory = new System.Windows.Forms.Label();
             this.CheckSaveSettings = new System.Windows.Forms.CheckBox();
@@ -63,7 +64,6 @@ namespace CabMaker
             this.LabelOutputStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.ErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.ComboRootDir = new System.Windows.Forms.ComboBox();
             this.GroupBoxFiles.SuspendLayout();
             this.GroupBoxCompressor.SuspendLayout();
             this.StatusStrip.SuspendLayout();
@@ -73,10 +73,9 @@ namespace CabMaker
             // ButtonTargetBrowse
             // 
             this.ButtonTargetBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.ButtonTargetBrowse.Location = new System.Drawing.Point(500, 25);
-            this.ButtonTargetBrowse.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.ButtonTargetBrowse.Location = new System.Drawing.Point(335, 16);
             this.ButtonTargetBrowse.Name = "ButtonTargetBrowse";
-            this.ButtonTargetBrowse.Size = new System.Drawing.Size(112, 35);
+            this.ButtonTargetBrowse.Size = new System.Drawing.Size(75, 23);
             this.ButtonTargetBrowse.TabIndex = 9;
             this.ButtonTargetBrowse.Text = "Browse...";
             this.ButtonTargetBrowse.UseVisualStyleBackColor = true;
@@ -90,22 +89,20 @@ namespace CabMaker
             this.TextOutput.BackColor = System.Drawing.Color.White;
             this.TextOutput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.TextOutput.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TextOutput.Location = new System.Drawing.Point(6, 186);
-            this.TextOutput.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.TextOutput.Location = new System.Drawing.Point(4, 121);
             this.TextOutput.Multiline = true;
             this.TextOutput.Name = "TextOutput";
             this.TextOutput.ReadOnly = true;
             this.TextOutput.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.TextOutput.Size = new System.Drawing.Size(638, 190);
+            this.TextOutput.Size = new System.Drawing.Size(426, 124);
             this.TextOutput.TabIndex = 22;
             this.TextOutput.WordWrap = false;
             // 
             // ButtonRun
             // 
-            this.ButtonRun.Location = new System.Drawing.Point(242, 143);
-            this.ButtonRun.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.ButtonRun.Location = new System.Drawing.Point(161, 93);
             this.ButtonRun.Name = "ButtonRun";
-            this.ButtonRun.Size = new System.Drawing.Size(112, 35);
+            this.ButtonRun.Size = new System.Drawing.Size(75, 23);
             this.ButtonRun.TabIndex = 19;
             this.ButtonRun.Text = "Make CAB";
             this.ToolTip.SetToolTip(this.ButtonRun, "Create a Cabinet with the above specifications");
@@ -115,10 +112,9 @@ namespace CabMaker
             // LabelOutputFile
             // 
             this.LabelOutputFile.AutoSize = true;
-            this.LabelOutputFile.Location = new System.Drawing.Point(8, 32);
-            this.LabelOutputFile.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.LabelOutputFile.Location = new System.Drawing.Point(5, 21);
             this.LabelOutputFile.Name = "LabelOutputFile";
-            this.LabelOutputFile.Size = new System.Drawing.Size(91, 20);
+            this.LabelOutputFile.Size = new System.Drawing.Size(61, 13);
             this.LabelOutputFile.TabIndex = 7;
             this.LabelOutputFile.Text = "Output File:";
             this.ToolTip.SetToolTip(this.LabelOutputFile, "The location where the Cabinet will be placed");
@@ -127,29 +123,26 @@ namespace CabMaker
             // 
             this.TextOutputFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextOutputFile.Location = new System.Drawing.Point(108, 28);
-            this.TextOutputFile.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.TextOutputFile.Location = new System.Drawing.Point(72, 18);
             this.TextOutputFile.Name = "TextOutputFile";
-            this.TextOutputFile.Size = new System.Drawing.Size(384, 26);
+            this.TextOutputFile.Size = new System.Drawing.Size(257, 20);
             this.TextOutputFile.TabIndex = 8;
             // 
             // LabelCompressionType
             // 
             this.LabelCompressionType.AutoSize = true;
-            this.LabelCompressionType.Location = new System.Drawing.Point(8, 108);
-            this.LabelCompressionType.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.LabelCompressionType.Location = new System.Drawing.Point(5, 70);
             this.LabelCompressionType.Name = "LabelCompressionType";
-            this.LabelCompressionType.Size = new System.Drawing.Size(144, 20);
+            this.LabelCompressionType.Size = new System.Drawing.Size(97, 13);
             this.LabelCompressionType.TabIndex = 13;
             this.LabelCompressionType.Text = "Compression Type:";
             // 
             // LabelCompressionMemory
             // 
             this.LabelCompressionMemory.AutoSize = true;
-            this.LabelCompressionMemory.Location = new System.Drawing.Point(279, 108);
-            this.LabelCompressionMemory.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.LabelCompressionMemory.Location = new System.Drawing.Point(186, 70);
             this.LabelCompressionMemory.Name = "LabelCompressionMemory";
-            this.LabelCompressionMemory.Size = new System.Drawing.Size(166, 20);
+            this.LabelCompressionMemory.Size = new System.Drawing.Size(110, 13);
             this.LabelCompressionMemory.TabIndex = 15;
             this.LabelCompressionMemory.Text = "Compression Memory:";
             // 
@@ -157,9 +150,10 @@ namespace CabMaker
             // 
             this.DropdownCompressType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.DropdownCompressType.FormattingEnabled = true;
-            this.DropdownCompressType.Location = new System.Drawing.Point(159, 103);
+            this.DropdownCompressType.Location = new System.Drawing.Point(106, 67);
+            this.DropdownCompressType.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.DropdownCompressType.Name = "DropdownCompressType";
-            this.DropdownCompressType.Size = new System.Drawing.Size(110, 28);
+            this.DropdownCompressType.Size = new System.Drawing.Size(75, 21);
             this.DropdownCompressType.TabIndex = 14;
             this.ToolTip.SetToolTip(this.DropdownCompressType, "Compression Algorithm used for the Cabinet");
             this.DropdownCompressType.SelectedIndexChanged += new System.EventHandler(this.DropdownCompressType_SelectedIndexChanged);
@@ -169,9 +163,10 @@ namespace CabMaker
             this.DropdownCompressMemory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.DropdownCompressMemory.Enabled = false;
             this.DropdownCompressMemory.FormattingEnabled = true;
-            this.DropdownCompressMemory.Location = new System.Drawing.Point(452, 103);
+            this.DropdownCompressMemory.Location = new System.Drawing.Point(301, 67);
+            this.DropdownCompressMemory.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.DropdownCompressMemory.Name = "DropdownCompressMemory";
-            this.DropdownCompressMemory.Size = new System.Drawing.Size(110, 28);
+            this.DropdownCompressMemory.Size = new System.Drawing.Size(75, 21);
             this.DropdownCompressMemory.TabIndex = 16;
             this.ToolTip.SetToolTip(this.DropdownCompressMemory, "Memory Chunk Units for the LZX Cabinet");
             // 
@@ -184,9 +179,11 @@ namespace CabMaker
             this.GroupBoxFiles.Controls.Add(this.ClearFiles);
             this.GroupBoxFiles.Controls.Add(this.AddFile);
             this.GroupBoxFiles.Controls.Add(this.AddFolder);
-            this.GroupBoxFiles.Location = new System.Drawing.Point(12, 12);
+            this.GroupBoxFiles.Location = new System.Drawing.Point(8, 8);
+            this.GroupBoxFiles.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.GroupBoxFiles.Name = "GroupBoxFiles";
-            this.GroupBoxFiles.Size = new System.Drawing.Size(650, 262);
+            this.GroupBoxFiles.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.GroupBoxFiles.Size = new System.Drawing.Size(433, 170);
             this.GroupBoxFiles.TabIndex = 0;
             this.GroupBoxFiles.TabStop = false;
             this.GroupBoxFiles.Text = "Files";
@@ -197,18 +194,20 @@ namespace CabMaker
             | System.Windows.Forms.AnchorStyles.Right)));
             this.FilesListBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.FilesListBox.FormattingEnabled = true;
-            this.FilesListBox.Location = new System.Drawing.Point(6, 66);
+            this.FilesListBox.Location = new System.Drawing.Point(4, 43);
+            this.FilesListBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.FilesListBox.Name = "FilesListBox";
             this.FilesListBox.ScrollAlwaysVisible = true;
-            this.FilesListBox.Size = new System.Drawing.Size(638, 186);
+            this.FilesListBox.Size = new System.Drawing.Size(426, 122);
             this.FilesListBox.TabIndex = 5;
             this.ToolTip.SetToolTip(this.FilesListBox, "Checked items in the File List will be added to your Cabinet");
             // 
             // SelectAllFiles
             // 
-            this.SelectAllFiles.Location = new System.Drawing.Point(124, 25);
+            this.SelectAllFiles.Location = new System.Drawing.Point(83, 16);
+            this.SelectAllFiles.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.SelectAllFiles.Name = "SelectAllFiles";
-            this.SelectAllFiles.Size = new System.Drawing.Size(112, 35);
+            this.SelectAllFiles.Size = new System.Drawing.Size(75, 23);
             this.SelectAllFiles.TabIndex = 2;
             this.SelectAllFiles.Text = "Deselect All";
             this.ToolTip.SetToolTip(this.SelectAllFiles, "Batch select/deselect the contents of the File List");
@@ -217,9 +216,10 @@ namespace CabMaker
             // 
             // ClearFiles
             // 
-            this.ClearFiles.Location = new System.Drawing.Point(6, 25);
+            this.ClearFiles.Location = new System.Drawing.Point(4, 16);
+            this.ClearFiles.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.ClearFiles.Name = "ClearFiles";
-            this.ClearFiles.Size = new System.Drawing.Size(112, 35);
+            this.ClearFiles.Size = new System.Drawing.Size(75, 23);
             this.ClearFiles.TabIndex = 1;
             this.ClearFiles.Text = "Clear All";
             this.ToolTip.SetToolTip(this.ClearFiles, "Clear the contents of the File List");
@@ -228,9 +228,10 @@ namespace CabMaker
             // 
             // AddFile
             // 
-            this.AddFile.Location = new System.Drawing.Point(360, 25);
+            this.AddFile.Location = new System.Drawing.Point(240, 16);
+            this.AddFile.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.AddFile.Name = "AddFile";
-            this.AddFile.Size = new System.Drawing.Size(112, 35);
+            this.AddFile.Size = new System.Drawing.Size(75, 23);
             this.AddFile.TabIndex = 4;
             this.AddFile.Text = "Add Files";
             this.ToolTip.SetToolTip(this.AddFile, "Add specific file(s) to the File List");
@@ -239,9 +240,10 @@ namespace CabMaker
             // 
             // AddFolder
             // 
-            this.AddFolder.Location = new System.Drawing.Point(242, 25);
+            this.AddFolder.Location = new System.Drawing.Point(161, 16);
+            this.AddFolder.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.AddFolder.Name = "AddFolder";
-            this.AddFolder.Size = new System.Drawing.Size(112, 35);
+            this.AddFolder.Size = new System.Drawing.Size(75, 23);
             this.AddFolder.TabIndex = 3;
             this.AddFolder.Text = "Add Folder";
             this.ToolTip.SetToolTip(this.AddFolder, "Add a folder and its contents to the File List");
@@ -268,19 +270,32 @@ namespace CabMaker
             this.GroupBoxCompressor.Controls.Add(this.LabelOutputFile);
             this.GroupBoxCompressor.Controls.Add(this.ButtonRun);
             this.GroupBoxCompressor.Controls.Add(this.LabelCompressionType);
-            this.GroupBoxCompressor.Location = new System.Drawing.Point(12, 280);
+            this.GroupBoxCompressor.Location = new System.Drawing.Point(8, 182);
+            this.GroupBoxCompressor.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.GroupBoxCompressor.Name = "GroupBoxCompressor";
-            this.GroupBoxCompressor.Size = new System.Drawing.Size(650, 385);
+            this.GroupBoxCompressor.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.GroupBoxCompressor.Size = new System.Drawing.Size(433, 250);
             this.GroupBoxCompressor.TabIndex = 6;
             this.GroupBoxCompressor.TabStop = false;
             this.GroupBoxCompressor.Text = "Compressor";
             // 
+            // ComboRootDir
+            // 
+            this.ComboRootDir.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ComboRootDir.FormattingEnabled = true;
+            this.ComboRootDir.Location = new System.Drawing.Point(72, 40);
+            this.ComboRootDir.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ComboRootDir.Name = "ComboRootDir";
+            this.ComboRootDir.Size = new System.Drawing.Size(337, 21);
+            this.ComboRootDir.TabIndex = 23;
+            // 
             // CheckDeleteSidecars
             // 
             this.CheckDeleteSidecars.AutoSize = true;
-            this.CheckDeleteSidecars.Location = new System.Drawing.Point(488, 149);
+            this.CheckDeleteSidecars.Location = new System.Drawing.Point(325, 97);
+            this.CheckDeleteSidecars.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.CheckDeleteSidecars.Name = "CheckDeleteSidecars";
-            this.CheckDeleteSidecars.Size = new System.Drawing.Size(148, 24);
+            this.CheckDeleteSidecars.Size = new System.Drawing.Size(101, 17);
             this.CheckDeleteSidecars.TabIndex = 21;
             this.CheckDeleteSidecars.Text = "Delete Sidecars";
             this.ToolTip.SetToolTip(this.CheckDeleteSidecars, "Deletes temporary files after job");
@@ -289,9 +304,10 @@ namespace CabMaker
             // LabelRootDirectory
             // 
             this.LabelRootDirectory.AutoSize = true;
-            this.LabelRootDirectory.Location = new System.Drawing.Point(8, 65);
+            this.LabelRootDirectory.Location = new System.Drawing.Point(5, 42);
+            this.LabelRootDirectory.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.LabelRootDirectory.Name = "LabelRootDirectory";
-            this.LabelRootDirectory.Size = new System.Drawing.Size(81, 20);
+            this.LabelRootDirectory.Size = new System.Drawing.Size(55, 13);
             this.LabelRootDirectory.TabIndex = 10;
             this.LabelRootDirectory.Text = "Root DIR:";
             this.ToolTip.SetToolTip(this.LabelRootDirectory, "The location of the first directory of the Cabinet");
@@ -299,10 +315,10 @@ namespace CabMaker
             // CheckSaveSettings
             // 
             this.CheckSaveSettings.AutoSize = true;
-            this.CheckSaveSettings.Location = new System.Drawing.Point(360, 149);
-            this.CheckSaveSettings.Margin = new System.Windows.Forms.Padding(2);
+            this.CheckSaveSettings.Location = new System.Drawing.Point(240, 97);
+            this.CheckSaveSettings.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
             this.CheckSaveSettings.Name = "CheckSaveSettings";
-            this.CheckSaveSettings.Size = new System.Drawing.Size(123, 24);
+            this.CheckSaveSettings.Size = new System.Drawing.Size(86, 17);
             this.CheckSaveSettings.TabIndex = 20;
             this.CheckSaveSettings.Text = "Save on Exit";
             this.ToolTip.SetToolTip(this.CheckSaveSettings, "Saves CabMaker User Settings on Exit");
@@ -311,9 +327,10 @@ namespace CabMaker
             // 
             // ButtonClear
             // 
-            this.ButtonClear.Location = new System.Drawing.Point(6, 143);
+            this.ButtonClear.Location = new System.Drawing.Point(4, 93);
+            this.ButtonClear.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.ButtonClear.Name = "ButtonClear";
-            this.ButtonClear.Size = new System.Drawing.Size(112, 35);
+            this.ButtonClear.Size = new System.Drawing.Size(75, 23);
             this.ButtonClear.TabIndex = 17;
             this.ButtonClear.Text = "Clear";
             this.ToolTip.SetToolTip(this.ButtonClear, "Clear the contents of all settings");
@@ -322,9 +339,10 @@ namespace CabMaker
             // 
             // ButtonExport
             // 
-            this.ButtonExport.Location = new System.Drawing.Point(124, 143);
+            this.ButtonExport.Location = new System.Drawing.Point(83, 93);
+            this.ButtonExport.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.ButtonExport.Name = "ButtonExport";
-            this.ButtonExport.Size = new System.Drawing.Size(112, 35);
+            this.ButtonExport.Size = new System.Drawing.Size(75, 23);
             this.ButtonExport.TabIndex = 18;
             this.ButtonExport.Text = "Export Log";
             this.ToolTip.SetToolTip(this.ButtonExport, "Export the contents of the Log Box to a file");
@@ -337,10 +355,10 @@ namespace CabMaker
             this.StatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MainMenu,
             this.LabelOutputStatus});
-            this.StatusStrip.Location = new System.Drawing.Point(0, 670);
+            this.StatusStrip.Location = new System.Drawing.Point(0, 434);
             this.StatusStrip.Name = "StatusStrip";
-            this.StatusStrip.Padding = new System.Windows.Forms.Padding(2, 0, 14, 0);
-            this.StatusStrip.Size = new System.Drawing.Size(674, 32);
+            this.StatusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 9, 0);
+            this.StatusStrip.Size = new System.Drawing.Size(449, 22);
             this.StatusStrip.TabIndex = 23;
             this.StatusStrip.Text = "statusStrip1";
             // 
@@ -357,32 +375,32 @@ namespace CabMaker
             this.Exit});
             this.MainMenu.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.MainMenu.Name = "MainMenu";
-            this.MainMenu.Size = new System.Drawing.Size(78, 29);
+            this.MainMenu.Size = new System.Drawing.Size(54, 20);
             this.MainMenu.Text = "Menu";
             // 
             // MenuAbout
             // 
             this.MenuAbout.Name = "MenuAbout";
-            this.MenuAbout.Size = new System.Drawing.Size(220, 34);
+            this.MenuAbout.Size = new System.Drawing.Size(143, 22);
             this.MenuAbout.Text = "About";
             this.MenuAbout.Click += new System.EventHandler(this.MenuAbout_Click);
             // 
             // MenuHelp
             // 
             this.MenuHelp.Name = "MenuHelp";
-            this.MenuHelp.Size = new System.Drawing.Size(220, 34);
+            this.MenuHelp.Size = new System.Drawing.Size(143, 22);
             this.MenuHelp.Text = "Help";
             this.MenuHelp.Click += new System.EventHandler(this.MenuHelp_Click);
             // 
             // Separator2
             // 
             this.Separator2.Name = "Separator2";
-            this.Separator2.Size = new System.Drawing.Size(217, 6);
+            this.Separator2.Size = new System.Drawing.Size(140, 6);
             // 
             // MenuSave
             // 
             this.MenuSave.Name = "MenuSave";
-            this.MenuSave.Size = new System.Drawing.Size(220, 34);
+            this.MenuSave.Size = new System.Drawing.Size(143, 22);
             this.MenuSave.Text = "Save Settings";
             this.MenuSave.ToolTipText = "Manually save CabMaker User Settings";
             this.MenuSave.Click += new System.EventHandler(this.MenuSave_Click);
@@ -390,12 +408,12 @@ namespace CabMaker
             // Separator1
             // 
             this.Separator1.Name = "Separator1";
-            this.Separator1.Size = new System.Drawing.Size(217, 6);
+            this.Separator1.Size = new System.Drawing.Size(140, 6);
             // 
             // Exit
             // 
             this.Exit.Name = "Exit";
-            this.Exit.Size = new System.Drawing.Size(220, 34);
+            this.Exit.Size = new System.Drawing.Size(143, 22);
             this.Exit.Text = "Exit";
             this.Exit.ToolTipText = "Exit CabMaker";
             this.Exit.Click += new System.EventHandler(this.Exit_Click);
@@ -403,7 +421,7 @@ namespace CabMaker
             // LabelOutputStatus
             // 
             this.LabelOutputStatus.Name = "LabelOutputStatus";
-            this.LabelOutputStatus.Size = new System.Drawing.Size(0, 25);
+            this.LabelOutputStatus.Size = new System.Drawing.Size(0, 17);
             // 
             // ErrorProvider
             // 
@@ -411,24 +429,15 @@ namespace CabMaker
             this.ErrorProvider.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.AlwaysBlink;
             this.ErrorProvider.ContainerControl = this;
             // 
-            // ComboRootDir
-            // 
-            this.ComboRootDir.FormattingEnabled = true;
-            this.ComboRootDir.Location = new System.Drawing.Point(108, 62);
-            this.ComboRootDir.Name = "ComboRootDir";
-            this.ComboRootDir.Size = new System.Drawing.Size(504, 28);
-            this.ComboRootDir.TabIndex = 23;
-            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(674, 702);
+            this.ClientSize = new System.Drawing.Size(449, 456);
             this.Controls.Add(this.StatusStrip);
             this.Controls.Add(this.GroupBoxFiles);
             this.Controls.Add(this.GroupBoxCompressor);
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.MinimumSize = new System.Drawing.Size(686, 668);
+            this.MinimumSize = new System.Drawing.Size(463, 448);
             this.Name = "Form1";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.Text = "Form1";
