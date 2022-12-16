@@ -97,7 +97,7 @@ namespace CabMaker
             this.TextOutput.ReadOnly = true;
             this.TextOutput.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.TextOutput.Size = new System.Drawing.Size(638, 190);
-            this.TextOutput.TabIndex = 22;
+            this.TextOutput.TabIndex = 21;
             this.TextOutput.WordWrap = false;
             // 
             // ButtonRun
@@ -106,7 +106,7 @@ namespace CabMaker
             this.ButtonRun.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.ButtonRun.Name = "ButtonRun";
             this.ButtonRun.Size = new System.Drawing.Size(112, 35);
-            this.ButtonRun.TabIndex = 19;
+            this.ButtonRun.TabIndex = 18;
             this.ButtonRun.Text = "Make CAB";
             this.ToolTip.SetToolTip(this.ButtonRun, "Create a Cabinet with the above specifications");
             this.ButtonRun.UseVisualStyleBackColor = true;
@@ -141,7 +141,7 @@ namespace CabMaker
             this.LabelCompressionType.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelCompressionType.Name = "LabelCompressionType";
             this.LabelCompressionType.Size = new System.Drawing.Size(144, 20);
-            this.LabelCompressionType.TabIndex = 13;
+            this.LabelCompressionType.TabIndex = 12;
             this.LabelCompressionType.Text = "Compression Type:";
             // 
             // LabelCompressionMemory
@@ -151,7 +151,7 @@ namespace CabMaker
             this.LabelCompressionMemory.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LabelCompressionMemory.Name = "LabelCompressionMemory";
             this.LabelCompressionMemory.Size = new System.Drawing.Size(166, 20);
-            this.LabelCompressionMemory.TabIndex = 15;
+            this.LabelCompressionMemory.TabIndex = 14;
             this.LabelCompressionMemory.Text = "Compression Memory:";
             // 
             // DropdownCompressType
@@ -161,7 +161,7 @@ namespace CabMaker
             this.DropdownCompressType.Location = new System.Drawing.Point(159, 103);
             this.DropdownCompressType.Name = "DropdownCompressType";
             this.DropdownCompressType.Size = new System.Drawing.Size(110, 28);
-            this.DropdownCompressType.TabIndex = 14;
+            this.DropdownCompressType.TabIndex = 13;
             this.ToolTip.SetToolTip(this.DropdownCompressType, "Compression Algorithm used for the Cabinet");
             this.DropdownCompressType.SelectedIndexChanged += new System.EventHandler(this.DropdownCompressType_SelectedIndexChanged);
             // 
@@ -173,7 +173,7 @@ namespace CabMaker
             this.DropdownCompressMemory.Location = new System.Drawing.Point(452, 103);
             this.DropdownCompressMemory.Name = "DropdownCompressMemory";
             this.DropdownCompressMemory.Size = new System.Drawing.Size(110, 28);
-            this.DropdownCompressMemory.TabIndex = 16;
+            this.DropdownCompressMemory.TabIndex = 15;
             this.ToolTip.SetToolTip(this.DropdownCompressMemory, "Memory Chunk Units for the LZX Cabinet");
             // 
             // GroupBoxFiles
@@ -285,7 +285,7 @@ namespace CabMaker
             this.ComboRootDir.Location = new System.Drawing.Point(108, 62);
             this.ComboRootDir.Name = "ComboRootDir";
             this.ComboRootDir.Size = new System.Drawing.Size(504, 28);
-            this.ComboRootDir.TabIndex = 23;
+            this.ComboRootDir.TabIndex = 11;
             // 
             // CheckDeleteSidecars
             // 
@@ -293,7 +293,7 @@ namespace CabMaker
             this.CheckDeleteSidecars.Location = new System.Drawing.Point(488, 149);
             this.CheckDeleteSidecars.Name = "CheckDeleteSidecars";
             this.CheckDeleteSidecars.Size = new System.Drawing.Size(148, 24);
-            this.CheckDeleteSidecars.TabIndex = 21;
+            this.CheckDeleteSidecars.TabIndex = 20;
             this.CheckDeleteSidecars.Text = "Delete Sidecars";
             this.ToolTip.SetToolTip(this.CheckDeleteSidecars, "Deletes temporary files after job");
             this.CheckDeleteSidecars.UseVisualStyleBackColor = true;
@@ -315,7 +315,7 @@ namespace CabMaker
             this.CheckSaveSettings.Margin = new System.Windows.Forms.Padding(2);
             this.CheckSaveSettings.Name = "CheckSaveSettings";
             this.CheckSaveSettings.Size = new System.Drawing.Size(123, 24);
-            this.CheckSaveSettings.TabIndex = 20;
+            this.CheckSaveSettings.TabIndex = 19;
             this.CheckSaveSettings.Text = "Save on Exit";
             this.ToolTip.SetToolTip(this.CheckSaveSettings, "Saves CabMaker User Settings on Exit");
             this.CheckSaveSettings.UseVisualStyleBackColor = true;
@@ -326,7 +326,7 @@ namespace CabMaker
             this.ButtonClear.Location = new System.Drawing.Point(6, 143);
             this.ButtonClear.Name = "ButtonClear";
             this.ButtonClear.Size = new System.Drawing.Size(112, 35);
-            this.ButtonClear.TabIndex = 17;
+            this.ButtonClear.TabIndex = 16;
             this.ButtonClear.Text = "Clear";
             this.ToolTip.SetToolTip(this.ButtonClear, "Clear the contents of all settings");
             this.ButtonClear.UseVisualStyleBackColor = true;
@@ -337,7 +337,7 @@ namespace CabMaker
             this.ButtonExport.Location = new System.Drawing.Point(124, 143);
             this.ButtonExport.Name = "ButtonExport";
             this.ButtonExport.Size = new System.Drawing.Size(112, 35);
-            this.ButtonExport.TabIndex = 18;
+            this.ButtonExport.TabIndex = 17;
             this.ButtonExport.Text = "Export Log";
             this.ToolTip.SetToolTip(this.ButtonExport, "Export the contents of the Log Box to a file");
             this.ButtonExport.UseVisualStyleBackColor = true;
@@ -353,7 +353,7 @@ namespace CabMaker
             this.StatusStrip.Name = "StatusStrip";
             this.StatusStrip.Padding = new System.Windows.Forms.Padding(2, 0, 14, 0);
             this.StatusStrip.Size = new System.Drawing.Size(674, 32);
-            this.StatusStrip.TabIndex = 23;
+            this.StatusStrip.TabIndex = 22;
             this.StatusStrip.Text = "statusStrip1";
             // 
             // MainMenu
